@@ -1,0 +1,71 @@
+<div class="page main-page">
+  <span >COMMIT LOG BOOK</span><br><br>
+  <h1>Thanks to<br> {{ name }}</h1>
+  <div style="margin-top:600px;">{{ range }}</div>
+</div>
+
+
+<div class="page page-break page-padding-top">
+  <h2>First Commit</h2>
+  <span><b>{{ first_commit.repo }}</b> {{ first_commit.hash }} {{ first_commit.title }} {{ first_commit.date }}</span><br><br><br>
+  <h2>Last Commit</h2>
+  <span><b>{{ last_commit.repo }}</b> {{ last_commit.hash }} {{ last_commit.title }} {{ last_commit.date }}</span>
+</div>
+
+{% for repo, data in commits_by_repo.items() %}
+  <div class="page page-break page-padding-top">
+    <h2>{{ repo }}</h2>
+    <h4>{{ data.range }}</h4>
+  </div>
+
+  <div class="page page-break page-padding-top">
+    <div><span class="total-number">{{ "{:,}".format(data.total_commits) }}</span> Total Commits</div>
+    <div><span class="total-number">{{ "{:,}".format(data.total_changes) }}</span> Total Changed Files</div>
+    <div><span class="total-number">{{ "{:,}".format(data.total_inserts) }}</span> Total Insert Lines</div>
+    <div><span class="total-number">{{ "{:,}".format(data.total_deletes) }}</span> Total Delete Lines</div>
+  </div>
+
+  <div class="page-break">
+    {% for commit in data.commits %}
+      {% set index = loop.index - 2 %}
+      {% if commit.date != data.commits[index].date %}
+        {% if loop.index != 1 %}
+          </div>
+          </div>
+        {% endif %}
+        <div class="page-break-avoid">
+        <div class="separator">
+          <h3>{{ commit.date }}</h3>
+        </div>
+        <div class="group">
+      {% endif %}
+      <div class="envelope commit">
+        <div class="human">
+          <div class="message">
+            <pre>{{ commit.hash }} <a>{{ commit.title }}</a></pre>
+          </div>
+        </div>
+        <div class="machine">
+          Files Modified&nbsp;&nbsp;<a href="#">{{ commit.changed }}</a><br>
+          Lines Added&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">{{ commit.inserts }}</a><br>
+          Lines Removed&nbsp;&nbsp;&nbsp;<a href="#">{{ commit.deletes }}</a>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endfor %}
+
+
+<div class="page-break pageg">
+  {% for paper in rolling_paper %}
+    <h3>By {{ paper.author }}</h3>
+    <span>{{ paper.message }}</span>
+    <br><br><br>
+  {% endfor %}
+</div>
+
+<div class="page page-break">
+  <h1>COMMIT LOG BOOK </h1>
+  <H5>by ODK Backend Team</H5>
+</div>
