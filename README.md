@@ -18,5 +18,6 @@ PAGES = [{
 3. Make commit book
 
 ```shell
+pip install -r requirements.txt
 python commit.py
 ```
