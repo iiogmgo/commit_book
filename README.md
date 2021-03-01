@@ -19,5 +19,5 @@ PAGES = [{
 
 ```shell
 pip install -r requirements.txt
-python commit.py
+python generate_book.py
 ```
